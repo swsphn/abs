@@ -4,8 +4,10 @@ Python package to download from ABS and process to tidy format.
 
 ## Install
 
+``` sh
 pip install abs-data@git+https://github.com/swsphn/abs-data.git
 pipx install abs-data@git+https://github.com/swsphn/abs-data.git
+```
 
 ## Usage
 

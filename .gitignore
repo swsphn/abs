@@ -1,0 +1,4 @@
+*.xls
+*.xls?
+
+__pycache__

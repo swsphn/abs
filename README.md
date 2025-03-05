@@ -9,7 +9,7 @@ pip install abs-data@git+https://github.com/swsphn/abs-data.git
 pipx install abs-data@git+https://github.com/swsphn/abs-data.git
 ```
 
-## Usage
+## CLI Usage
 
 ``` sh
 # show available commands
@@ -28,4 +28,15 @@ abs ascceg -f csv some/other/directory
 
 abs ascceg some/file.csv
 abs ascceg some/file.parquet
+```
+
+## Library Usage
+
+You can also use this package as a library.
+
+``` python
+import abs
+
+ascceg = abs.ascceg.df()
+print(ascceg)
 ```

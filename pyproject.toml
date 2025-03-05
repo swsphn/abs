@@ -1,5 +1,5 @@
 [project]
-name = "abs-data"
+name = "abs"
 version = "0.1.0"
 description = ""
 authors = [
@@ -15,11 +15,6 @@ dependencies = [
 
 [project.scripts]
 abs = 'abs:app'
-
-[tool.poetry]
-packages = [
-    { include = "abs", from = "src" },
-]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

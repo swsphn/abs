@@ -1,12 +1,12 @@
 # ABS Data
 
-Python package to download from ABS and process to tidy format.
+Python package to download data from ABS and process to tidy format.
 
 ## Install
 
 ``` sh
-pip install abs-data@git+https://github.com/swsphn/abs-data.git
-pipx install abs-data@git+https://github.com/swsphn/abs-data.git
+pip install abs@git+https://github.com/swsphn/abs.git
+pipx install abs@git+https://github.com/swsphn/abs.git
 ```
 
 ## CLI Usage

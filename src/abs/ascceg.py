@@ -1,10 +1,13 @@
+from enum import StrEnum
 from pathlib import Path
+from typing import Annotated
+
 import polars as pl
 from polars import col
 import typer
-from typing import Annotated
 
 app = typer.Typer()
+
 
 def df():
     """Fetch Australian Standard Classification of Cultural and Ethnic
@@ -41,20 +44,49 @@ def df():
     return all_groups
 
 
+class SupportedFiletype(StrEnum):
+    parquet = "parquet"
+    csv = "csv"
+
+
 @app.command()
 def ascceg(
     output: Annotated[
-        Path, typer.Argument(help="directory or filepath to save output file (file suffix takes precedence over '-f' option)")
+        Path,
+        typer.Argument(
+            help="directory or filepath to save output file",
+            show_default="ascceg.parquet",
+        ),
     ] = Path(),
-    filetype: Annotated[str, typer.Option("--filetype", "-f", help="filetype ('parquet' or 'csv')")] = "parquet",
+    filetype: Annotated[
+        SupportedFiletype | None,
+        typer.Option(
+            "--filetype",
+            "-f",
+            help="filetype (not required if specified in file suffix)",
+            show_default=SupportedFiletype.parquet,
+        ),
+    ] = None,
 ):
-    """Fetch ASCCEG data from ABS as Parquet or CSV.
+    """Fetch Australian Standard Classification of Cultural and Ethnic
+    Groups (ASCCEG) data from ABS as Parquet or CSV.
     """
+
+    default_filetype = "parquet"
+
+    # Abort if conflict between specified filetype and file suffix
+    if filetype and filetype != output.suffix and not output.is_dir():
+        print(
+            f"Error: File suffix '{output.suffix}' does not match specified "
+            f"filetype '{filetype}'"
+        )
+        print("Hint: --filetype is not required if already specified in the filename")
+        raise typer.Abort()
 
     ascceg_df = df()
 
     if output.is_dir():
-        output = output / f"ascceg.{filetype}"
+        output = output / f"ascceg.{filetype or default_filetype}"
 
     if output.suffix == ".parquet":
         ascceg_df.write_parquet(output)

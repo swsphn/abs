@@ -1,6 +1,9 @@
-# ABS Data
+# ABS
 
-Python package to download data from ABS and process to tidy format.
+Python package to download data from the Australian Bureau of Statistics
+(ABS) and process to tidy format.
+
+It can be used either as a command-line tool, or as a library.
 
 ## Install
 
@@ -32,7 +35,9 @@ abs ascceg some/file.parquet
 
 ## Library Usage
 
-You can also use this package as a library.
+You can also use this package as a library. Data is returned as tidy
+[Polars][] DataFrames. If you are more comfortable with [Pandas][],
+you can convert the DataFrame with the [to_pandas][] method.
 
 ``` python
 import abs
@@ -40,3 +45,7 @@ import abs
 ascceg = abs.ascceg.df()
 print(ascceg)
 ```
+
+[Polars]: https://pola.rs/
+[Pandas]: https://pandas.pydata.org/
+[to_pandas]: https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.to_pandas.html

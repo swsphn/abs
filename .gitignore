@@ -1,4 +1,8 @@
 *.xls
 *.xls?
 
+*.csv
+*.parquet
+*.json
+
 __pycache__

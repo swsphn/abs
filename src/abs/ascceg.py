@@ -1,4 +1,3 @@
-from enum import StrEnum
 from pathlib import Path
 from typing import Annotated
 
@@ -6,6 +5,13 @@ import polars as pl
 import polars.selectors as cs
 from polars import col
 import typer
+
+# Remove fallback to backports.strenum once we drop support for Python
+# 3.10 (no sooner than 2026-10).
+try:
+    from enum import StrEnum
+except ImportError:
+    from backports.strenum import StrEnum
 
 app = typer.Typer()
 

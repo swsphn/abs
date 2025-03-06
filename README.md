@@ -66,7 +66,7 @@ Here are the steps to add a new data source to this tool:
 
 For example, suppose you create a new module called `sacc.py` to fetch
 and tidy the [_Standard Australian Classification of Countries
-(SACC)][sacc] data source. Assuming that you have added a docstring as
+(SACC)][sacc]_ data source. Assuming that you have added a docstring as
 the first line of `sacc.py`, and have defined a function `df()` in
 `sacc.py` which returns a Polars DataFrame, the only required steps to
 create the CLI subcommand are to add the following two lines to

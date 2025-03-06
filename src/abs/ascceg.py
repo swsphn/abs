@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Annotated
 
 import polars as pl
+import polars.selectors as cs
 from polars import col
 import typer
 
@@ -19,22 +20,26 @@ def df():
 
     digits = r"^\d+$"
 
-    main_groups = pl.read_excel(
+    # Load both sheets at once to avoid downloading the file twice
+    dfs = pl.read_excel(
         ascceg_file,
-        sheet_name="Table 1.3",
+        sheet_name=["Table 1.3", "Table 2"],
         has_header=False,
-        columns=[2, 3],
-        read_options={"skip_rows": 9, "column_names": ["code", "group"]},
-    ).filter(col("code").str.contains(digits))
+    )
+
+    main_groups = (
+        dfs["Table 1.3"]
+        .with_row_index()
+        .filter(col("index") >= 9)
+        .select(col("column_3").alias("code"), col("column_4").alias("group"))
+        .filter(col("code").str.contains(digits))
+    )
 
     supplementary_groups = (
-        pl.read_excel(
-            ascceg_file,
-            sheet_name="Table 2",
-            has_header=False,
-            columns=[0, 1],
-            read_options={"skip_rows": 5, "column_names": ["code", "group"]},
-        )
+        dfs["Table 2"]
+        .with_row_index()
+        .filter(col("index") >= 4)
+        .select(col("column_1").alias("code"), col("column_2").alias("group"))
         .filter(col("code").str.contains(digits))
         .with_columns(col("code").str.pad_start(4, "0"))
     )

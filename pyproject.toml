@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.scripts]
-abs = 'abs:app'
+abs = 'abs.__main__:app'
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

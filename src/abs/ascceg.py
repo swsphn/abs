@@ -1,19 +1,9 @@
-from pathlib import Path
-from typing import Annotated
+"""Fetch Australian Standard Classification of Cultural and Ethnic
+Groups (ASCCEG) data from ABS.
+"""
 
 import polars as pl
-import polars.selectors as cs
 from polars import col
-import typer
-
-# Remove fallback to backports.strenum once we drop support for Python
-# 3.10 (no sooner than 2026-10).
-try:
-    from enum import StrEnum
-except ImportError:
-    from backports.strenum import StrEnum
-
-app = typer.Typer()
 
 
 def df():
@@ -53,53 +43,3 @@ def df():
     all_groups = pl.concat([main_groups, supplementary_groups]).sort("code")
 
     return all_groups
-
-
-class SupportedFiletype(StrEnum):
-    parquet = "parquet"
-    csv = "csv"
-
-
-@app.command()
-def ascceg(
-    output: Annotated[
-        Path,
-        typer.Argument(
-            help="directory or filepath to save output file",
-            show_default="ascceg.parquet",
-        ),
-    ] = Path(),
-    filetype: Annotated[
-        SupportedFiletype | None,
-        typer.Option(
-            "--filetype",
-            "-f",
-            help="filetype (not required if specified in file suffix)",
-            show_default=SupportedFiletype.parquet,
-        ),
-    ] = None,
-):
-    """Fetch Australian Standard Classification of Cultural and Ethnic
-    Groups (ASCCEG) data from ABS as Parquet or CSV.
-    """
-
-    default_filetype = "parquet"
-
-    # Abort if conflict between specified filetype and file suffix
-    if filetype and filetype != output.suffix and not output.is_dir():
-        print(
-            f"Error: File suffix '{output.suffix}' does not match specified "
-            f"filetype '{filetype}'"
-        )
-        print("Hint: --filetype is not required if already specified in the filename")
-        raise typer.Abort()
-
-    ascceg_df = df()
-
-    if output.is_dir():
-        output = output / f"ascceg.{filetype or default_filetype}"
-
-    if output.suffix == ".parquet":
-        ascceg_df.write_parquet(output)
-    elif output.suffix == ".csv":
-        ascceg_df.write_csv(output)

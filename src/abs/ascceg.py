@@ -16,7 +16,7 @@ def df():
 
     digits = r"^\d+$"
 
-    # Load both sheets at once to avoid downloading the file twice
+    # Load all sheets at once to avoid multiple downloads
     dfs = pl.read_excel(
         ascceg_file,
         sheet_name=["Table 1.1", "Table 1.2", "Table 1.3", "Table 2"],

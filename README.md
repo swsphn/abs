@@ -56,7 +56,8 @@ Here are the steps to add a new data source to this tool:
     2. This module MUST contain a function named `df()` which returns
        a [Polars][] DataFrame.
     3. This module SHOULD contain a docstring as the first line of the
-       file.
+       file. The module docstring will be automatically used as the help
+       for the subcommand.
     4. The module name will be automatically used as the name of the
        subcommand, and also of the output file.
 2. There is no step 2. The module will be automatically added to the

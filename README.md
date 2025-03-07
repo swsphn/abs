@@ -65,7 +65,7 @@ Here are the steps to add a new data source to this tool:
    the name of the new module.
 
 For example, suppose you create a new module called `sacc.py` to fetch
-and tidy the [_Standard Australian Classification of Countries
+and tidy the _[Standard Australian Classification of Countries
 (SACC)][sacc]_ data source. Assuming that you have added a docstring as
 the first line of `sacc.py`, and have defined a function `df()` in
 `sacc.py` which returns a Polars DataFrame, then you are done!

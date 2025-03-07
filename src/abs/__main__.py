@@ -11,7 +11,7 @@ import typer
 import abs
 from abs.util import add_command
 
-app = typer.Typer()
+app = typer.Typer(context_settings={"help_option_names": ["--help", "-h"]})
 
 
 @app.callback()

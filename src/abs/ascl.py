@@ -1,5 +1,5 @@
 """Fetch Australian Standard Classification of Languages
-(ASCCEG) data from ABS.
+(ASCL) data from ABS.
 """
 
 import polars as pl
